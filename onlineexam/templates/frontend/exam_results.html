@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Exam Results</h2>
+<p>Your score: {{ correct }} / {{ total }} ({{ score_percentage }}%)</p>
+
+<div class="exam-results">
+    {% for r in results %}
+    <div class="card mb-3">
+        <div class="card-header"><strong>Question:</strong> {{ r.question }}
+        </div>
+        <div class="card-body">
+            <ul>
+                {% for choice in r.choices %}
+                <li {% if choice == r.selected %}
+                    style="font-weight:bold; color:{% if r.correct %}green{% else %}red{% endif %}"
+                    {% endif %}>
+                    {{ choice }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% if r.correct %}
+            <p class="text-success">Correct ✅</p>
+            {% else %}
+            <p class="text-danger">Incorrect ❌</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

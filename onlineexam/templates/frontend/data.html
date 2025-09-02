@@ -1,0 +1,73 @@
+{% extends 'frontend/base3.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<script>
+    notify('{{message.level_tag}}', "{{message}}");
+</script>
+
+{% endfor %}
+
+{% endif %}
+<div class="col">
+    <div class="card h-100 py-2 p-3">
+        <h1 class="text-center mb-4" style="color: rgb(25, 135, 84);">My
+            Search Information</h1>
+
+        {% if list %}
+        <div class="table-responsive">
+            <table
+                class="table table export-table  table-striped table-hover align-middle">
+                <thead class="table-success">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Exam</th>
+                        <th scope="col">Total Questions</th>
+                        <th scope="col">Correct</th>
+                        <th scope="col">Wrong</th>
+                        <th scope="col">Marks</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sub in list %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ sub.information }}</td>
+                        <td>{{ sub.questions}}</td>
+                        <td>{{ sub.correct }}</td>
+                        <td>{{ sub.wrong }}</td>
+                        <td>{{ sub.marks }}</td>
+
+                        <td>
+                            {% if sub.passed %}
+                            <span class="text-success btn-sm">Passed</span>
+                            {% else %}
+                            <span class="text-danger btn-sm">Failed</span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-sm-4"> </div>
+            <div class="col-sm-4">
+                <div class="alert alert-info text-center" role="alert">
+                    You have no active subscriptions. <a
+                        href="{% url 'subscription-categories' %}"
+                        class="alert-link">Subscribe now</a>.
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
